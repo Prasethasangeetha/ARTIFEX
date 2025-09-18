@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART-I-FEX | Art Gallery Management System</title>
+    <link rel="stylesheet" href="https://tse2.mm.bing.net/th?id=OIP.3p_y5HasrmbN66xAztCe_wHaDt&pid=Api&P=0&h=180">
+    <style>
+        :root {
+            --primary-color: #3a3a3a;
+            --secondary-color: #3a9cb5;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gold-color: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--primary-color);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .content-section {
+            display: none;
+            padding: 100px 5% 50px;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .active-section {
+            display: block;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Home Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://tse2.mm.bing.net/th?id=OIP.3p_y5HasrmbN66xAztCe_wHaDt&pid=Api&P=0&h=180');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Artist Section */
+        .artists-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .artist-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .artist-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .artist-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .artist-card:hover .artist-img img {
+            transform: scale(1.1);
+        }
+        
+        .artist-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .artist-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .artist-info p.specialty {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .artist-info p.bio {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Artwork Section */
+        .artwork-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .artwork-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .artwork-img {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .artwork-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .artwork-card:hover .artwork-img img {
+            transform: scale(1.1);
+        }
+        
+        .artwork-info {
+            padding: 1.5rem;
+        }
+        
+        .artwork-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .artwork-info .artist-name {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .artwork-info .price {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .artwork-info .btn {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: modalOpen 0.5s;
+        }
+        
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .payment-methods {
+            margin-top: 2rem;
+        }
+        
+        .payment-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .payment-tab.active {
+            border-bottom: 3px solid var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .payment-content {
+            display: none;
+        }
+        
+        .payment-content.active {
+            display: block;
+        }
+        
+        .payment-form {
+            margin-top: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .qr-code {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .qr-code img {
+            max-width: 200px;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        
+        .success-message i {
+            font-size: 5rem;
+            color: #2ecc71;
+            margin-bottom: 1.5rem;
+        }
+        
+        .success-message h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2ecc71;
+        }
+        
+        /* Exhibition Section */
+        .exhibition-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .exhibition-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .exhibition-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .exhibition-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .exhibition-info {
+            padding: 1.5rem;
+        }
+        
+        .exhibition-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .exhibition-info .date {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .exhibition-info .location {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .exhibition-info .description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        /* Paint Board Section */
+        .paint-board {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .canvas-container {
+            border: 2px dashed #ddd;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        #paintCanvas {
+            display: block;
+            background-color: white;
+            cursor: crosshair;
+        }
+        
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tool-btn {
+            padding: 8px 15px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background-color: #ddd;
+        }
+        
+        .tool-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .brush-size {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-right: 1rem;
+            margin-top: 5px;
+        }
+        
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Load More Button */
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                transition: all 0.5s;
+            }
+        
+            .nav-links.active {
+                left: 0;
+            }
+        
+            .nav-links li {
+                margin: 1rem 0;
+            }
+        
+            .mobile-menu-btn {
+                display: block;
+            }
+        
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        
+            .hero-content p {
+                font-size: 1rem;
+            }
+        
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <h1>ART-I-FEX</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link" data-section="home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" class="nav-link" data-section="artists"><i class="fas fa-user"></i> Artists</a></li>
+                <li><a href="#" class="nav-link" data-section="artwork"><i class="fas fa-paint-brush"></i> Artwork</a></li>
+                <li><a href="#" class="nav-link" data-section="exhibitions"><i class="fas fa-calendar-alt"></i> Exhibitions</a></li>
+                <li><a href="#" class="nav-link" data-section="paint-board"><i class="fas fa-paint-roller"></i> Paint Board</a></li>
+                <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Sections -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="content-section active-section">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Discover Extraordinary Art</h1>
+                    <p>Explore a world of creativity with ART-I-FEX, where artists and art lovers connect. Find unique pieces for your collection or showcase your own masterpieces to the world.</p>
+                    <a href="#" class="btn nav-link" data-section="artwork">Browse Artwork</a>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <h2>Why Choose ART-I-FEX</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Global Reach</h3>
+                    <p>Connect with artists and buyers from around the world, expanding your artistic horizons.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <h3>Secure Transactions</h3>
+                    <p>Safe and reliable payment options for both buyers and sellers with our protected system.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brush"></i>
+                    <h3>Diverse Collection</h3>
+                    <p>From classical to contemporary, discover artworks across all styles and mediums.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Artists Section -->
+        <section id="artists" class="content-section">
+            <div class="section-title">
+                <h2>Our Artists</h2>
+            </div>
+            
+            <div class="artists-container">
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Artist 1">
+                    </div>
+                    <div class="artist-info">
+                        <h3>Michael Chen</h3>
+                        <p class="specialty">Abstract Expressionism</p>
+                        <p class="bio">Born in 1985 in New York, Michael studied at the School of Visual Arts. His work has been exhibited in galleries across the US and Europe. He explores the relationship between color and emotion through dynamic brushwork and layered textures.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="michael-chen">View Artwork</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Artist 2">
+                    </div>
+                    <div class="artist-info">
+                        <h3>Sophia Rodriguez</h3>
+                        <p class="specialty">Photorealism</p>
+                        <p class="bio">Sophia (b. 1990, Madrid) is known for her meticulous attention to detail. A graduate of the Royal Academy of Fine Arts of San Fernando, she spends months perfecting each piece, often working with magnifying glasses to achieve her signature precision.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="sophia-rodriguez">View Artwork</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Artist 3">
+                    </div>
+                    <div class="artist-info">
+                        <h3>James Wilson</h3>
+                        <p class="specialty">Mixed Media</p>
+                        <p class="bio">London-based James (b. 1982) combines painting, sculpture and found objects in his innovative works. His pieces often incorporate recycled materials, making commentary on consumer culture while creating visually stunning compositions.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="james-wilson">View Artwork</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Artist 4">
+                    </div>
+                    <div class="artist-info">
+                        <h3>Emma Johnson</h3>
+                        <p class="specialty">Impressionism</p>
+                        <p class="bio">Emma (b. 1978, Paris) captures the fleeting beauty of light and atmosphere in her impressionistic landscapes. Her plein air works have been described as "visual poetry," earning her critical acclaim and numerous awards.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="emma-johnson">View Artwork</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Artist 5">
+                    </div>
+                    <div class="artist-info">
+                        <h3>David Kim</h3>
+                        <p class="specialty">Digital Art</p>
+                        <p class="bio">Pioneering digital artist David (b. 1991, Seoul) merges traditional aesthetics with cutting-edge technology. His animated NFTs and interactive installations have positioned him at the forefront of the digital art movement.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="david-kim">View Artwork</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-img">
+                        <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=772&q=80" alt="Artist 6">
+                    </div>
+                    <div class="artist-info">
+                        <h3>Olivia Martinez</h3>
+                        <p class="specialty">Surrealism</p>
+                        <p class="bio">Olivia's dreamlike compositions (b. 1987, Mexico City) explore the subconscious through symbolic imagery. Her works have been featured in international surrealist exhibitions and several prominent private collections.</p>
+                        <a href="#" class="btn nav-link" data-section="artwork" data-artist="olivia-martinez">View Artwork</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more">
+                <a href="#" class="btn">Load More Artists</a>
+            </div>
+
+             <!-- Add to ARTISTS section (before the artist cards) -->
+<div class="add-artist-form">
+  <h3>Add New Artist</h3>
+  <form id="artistForm">
+    <div class="form-group">
+      <input type="text" id="artistName" placeholder="Artist Name" required>
+    </div>
+    <div class="form-group">
+      <input type="text" id="artistSpecialty" placeholder="Specialty (e.g. Abstract Art)">
+    </div>
+    <div class="form-group">
+      <textarea id="artistBio" placeholder="Artist Biography" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Artist Photo</label>
+      <input type="file" id="artistPhoto" accept="image/*">
+    </div>
+    <button type="submit" class="btn">Add Artist</button>
+  </form>
+
+  <h4>Added Artists</h4>
+  <table id="artistTable" border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Specialty</th>
+        <th>Biography</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+        </section>
+ 
+        <!-- Artwork Section -->
+        <section id="artwork" class="content-section">
+            <div class="section-title">
+                <h2>Artwork Collection</h2>
+            </div>
+            
+            <div class="artwork-container">
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Artwork 1">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>Eternal Sunset</h3>
+                        <p class="artist-name">By Michael Chen</p>
+                        <p class="price">Rs.4,20,00,000</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="eternal-sunset">Purchase</a>
+                    </div>
+                </div>
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1531913764164-f85c52e6e654?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Artwork 2">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>Urban Reflection</h3>
+                        <p class="artist-name">By Sophia Rodriguez</p>
+                        <p class="price">Rs.7,30,00,000</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="urban-reflection">Purchase</a>
+                    </div>
+                </div>
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1540&q=80" alt="Artwork 3">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>Deconstructed Reality</h3>
+                        <p class="artist-name">By James Wilson</p>
+                        <p class="price">Rs.5,20,90,000</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="deconstructed-reality">Purchase</a>
+                    </div>
+                </div>
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Artwork 4">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>Morning in Provence</h3>
+                        <p class="artist-name">By Emma Johnson</p>
+                        <p class="price">Rs.20,00,000</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="morning-in-provence">Purchase</a>
+                    </div>
+                </div>
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1551085254-e96b210db58a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1580&q=80" alt="Artwork 5">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>Digital Dreams</h3>
+                        <p class="artist-name">By David Kim</p>
+                        <p class="price">Rs.60,90,000 (NFT available)</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="digital-dreams">Purchase</a>
+                    </div>
+                </div>
+                <div class="artwork-card">
+                    <div class="artwork-img">
+                        <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1584&q=80" alt="Artwork 6">
+                    </div>
+                    <div class="artwork-info">
+                        <h3>The Dreamcatcher</h3>
+                        <p class="artist-name">By Olivia Martinez</p>
+                        <p class="price">Rs.2,00,000</p>
+                        <a href="#" class="btn purchase-btn" data-artwork="the-dreamcatcher">Purchase</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more">
+                <a href="#" class="btn">Load More Artwork</a>
+            </div>
+            
+            <!-- Add to ARTWORK section (before the artwork cards) -->
+<div class="add-artwork-form">
+  <h3>Add New Artwork</h3>
+  <form id="artworkForm">
+    <div class="form-group">
+      <input type="text" id="artworkTitle" placeholder="Artwork Title" required>
+    </div>
+    <div class="form-group">
+      <select id="artworkArtist" required>
+        <option value="">Select Artist</option>
+        <!-- Options will be populated dynamically -->
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="number" id="artworkPrice" placeholder="Price ($)" min="0" required>
+    </div>
+    <div class="form-group">
+      <label>Artwork Image</label>
+      <input type="file" id="artworkImage" accept="image/*" required>
+    </div>
+    <button type="submit" class="btn">Add Artwork</button>
+  </form>
+
+  <h4>Added Artworks</h4>
+  <table id="artworkTable" border="1">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Price</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  const artistForm = document.getElementById('artistForm');
+  const artistTableBody = document.querySelector('#artistTable tbody');
+  const artworkForm = document.getElementById('artworkForm');
+  const artworkTableBody = document.querySelector('#artworkTable tbody');
+  const artworkArtistSelect = document.getElementById('artworkArtist');
+
+  artistForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('artistName').value;
+    const specialty = document.getElementById('artistSpecialty').value;
+    const bio = document.getElementById('artistBio').value;
+    const photoFile = document.getElementById('artistPhoto').files[0];
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      const photoURL = reader.result;
+
+      // Add to artist table
+      const row = artistTableBody.insertRow();
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${specialty}</td>
+        <td>${bio}</td>
+        <td><img src="${photoURL}" width="60" height="60"></td>
+      `;
+
+      // Add to artist select dropdown for artwork
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      artworkArtistSelect.appendChild(option);
+
+      artistForm.reset();
+    };
+    if (photoFile) reader.readAsDataURL(photoFile);
+  });
+
+  artworkForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const title = document.getElementById('artworkTitle').value;
+    const artist = document.getElementById('artworkArtist').value;
+    const price = document.getElementById('artworkPrice').value;
+    const imageFile = document.getElementById('artworkImage').files[0];
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      const imageURL = reader.result;
+
+      const row = artworkTableBody.insertRow();
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${artist}</td>
+        <td>$${price}</td>
+        <td><img src="${imageURL}" width="60" height="60"></td>
+      `;
+
+      artworkForm.reset();
+    };
+    if (imageFile) reader.readAsDataURL(imageFile);
+  });
+</script>
+        </section>
+
+        <!-- Exhibitions Section -->
+        <section id="exhibitions" class="content-section">
+            <div class="section-title">
+                <h2>Upcoming Exhibitions</h2>
+            </div>
+            
+            <div class="exhibition-container">
+                <div class="exhibition-card">
+                    <div class="exhibition-img">
+                        <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80" alt="Exhibition 1">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Modern Perspectives</h3>
+                        <p class="date">June 15 - July 30, 2025</p>
+                        <p class="location">The Contemporary Art Museum, New York</p>
+                        <p class="description">This groundbreaking exhibition showcases works from emerging artists who are redefining contemporary art. Featuring installations, digital media, and traditional works that challenge conventional perspectives.</p>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Modern+Perspectives+Exhibition&dates=20230615T100000/20230730T180000&location=The+Contemporary+Art+Museum,+New+York&details=Modern+Perspectives+exhibition+at+The+Contemporary+Art+Museum" class="btn" target="_blank">Add to Calendar</a>
+                    </div>
+                </div>
+                <div class="exhibition-card">
+                    <div class="exhibition-img">
+                        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80" alt="Exhibition 2">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Abstract Visions</h3>
+                        <p class="date">August 5 - September 20, 2025</p>
+                        <p class="location">National Gallery of Modern Art, London</p>
+                        <p class="description">A celebration of abstract art through the decades, featuring both established masters and contemporary innovators. The exhibition includes rarely seen works from private collections.</p>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Abstract+Visions+Exhibition&dates=20230805T100000/20230920T180000&location=National+Gallery+of+Modern+Art,+London&details=Abstract+Visions+exhibition+at+National+Gallery+of+Modern+Art" class="btn" target="_blank">Add to Calendar</a>
+                    </div>
+                </div>
+                <div class="exhibition-card">
+                    <div class="exhibition-img">
+                        <img src="https://images.unsplash.com/photo-1561214078-f3247647fc5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Exhibition 3">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Digital Frontiers</h3>
+                        <p class="date">October 10 - November 25, 2025</p>
+                        <p class="location">Museum of Digital Art, Berlin</p>
+                        <p class="description">Exploring the intersection of art and technology, this exhibition features immersive digital installations, VR experiences, and algorithmic art that pushes the boundaries of creative expression.</p>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Digital+Frontiers+Exhibition&dates=20231010T100000/20231125T180000&location=Museum+of+Digital+Art,+Berlin&details=Digital+Frontiers+exhibition+at+Museum+of+Digital+Art" class="btn" target="_blank">Add to Calendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <h2>Past Exhibitions</h2>
+            </div>
+            
+            <div class="exhibition-container">
+                <div class="exhibition-card">
+                    <div class="exhibition-img">
+                        <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Past Exhibition 1">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Color in Motion</h3>
+                        <p class="date">March 1 - April 15, 2023</p>
+                        <p class="location">Tate Modern, London</p>
+                        <p class="description">This exhibition explored the dynamic use of color in contemporary art, featuring works that create optical vibrations and kinetic effects through masterful color combinations.</p>
+                    </div>
+                </div>
+                <div class="exhibition-card">
+                    <div class="exhibition-img">
+                        <img src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1580&q=80" alt="Past Exhibition 2">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Material Transformations</h3>
+                        <p class="date">January 10 - February 28, 2023</p>
+                        <p class="location">Museum of Arts and Design, New York</p>
+                        <p class="description">Focusing on artists who transform ordinary materials into extraordinary works of art, this exhibition highlighted innovative techniques and unconventional media.</p>
+                    </div>
+                </div>
+            </div>
+           
+            <!-- Add to EXHIBITION section (before the exhibition cards) -->
+<div class="add-exhibition-form">
+  <h3>Add New Exhibition</h3>
+  <form id="exhibitionForm">
+    <div class="form-group">
+      <input type="text" id="exhibitionTitle" placeholder="Exhibition Title" required>
+    </div>
+    <div class="form-group">
+      <input type="date" id="exhibitionDate" required>
+    </div>
+    <div class="form-group">
+      <textarea id="exhibitionDesc" placeholder="Exhibition Description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Banner Image</label>
+      <input type="file" id="exhibitionImage" accept="image/*" required>
+    </div>
+    <button type="submit" class="btn">Add Exhibition</button>
+  </form>
+
+  <h4>Upcoming Exhibitions</h4>
+  <table id="exhibitionTable" border="1">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Banner</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  const exhibitionForm = document.getElementById('exhibitionForm');
+  const exhibitionTableBody = document.querySelector('#exhibitionTable tbody');
+
+  exhibitionForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const title = document.getElementById('exhibitionTitle').value;
+    const date = document.getElementById('exhibitionDate').value;
+    const desc = document.getElementById('exhibitionDesc').value;
+    const imageFile = document.getElementById('exhibitionImage').files[0];
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      const imageURL = reader.result;
+
+      const row = exhibitionTableBody.insertRow();
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${date}</td>
+        <td>${desc}</td>
+        <td><img src="${imageURL}" width="60" height="60"></td>
+      `;
+
+      exhibitionForm.reset();
+    };
+    if (imageFile) reader.readAsDataURL(imageFile);
+  });
+</script>
+        </section>
+
+        <!-- Paint Board Section -->
+        <section id="paint-board" class="content-section">
+            <div class="section-title">
+                <h2>Digital Paint Board</h2>
+            </div>
+            
+            <div class="paint-board">
+                <p>Express your creativity with our interactive paint board. Experiment with different tools and colors to create your own digital masterpiece!</p>
+                
+                <div class="canvas-container">
+                    <canvas id="paintCanvas" width="800" height="500"></canvas>
+                </div>
+                
+                <div class="tools">
+                    <button class="tool-btn active" id="brushTool"><i class="fas fa-paint-brush"></i> Brush</button>
+                    <button class="tool-btn" id="lineTool"><i class="fas fa-slash"></i> Line</button>
+                    <button class="tool-btn" id="rectangleTool"><i class="far fa-square"></i> Rectangle</button>
+                    <button class="tool-btn" id="circleTool"><i class="far fa-circle"></i> Circle</button>
+                    <button class="tool-btn" id="eraserTool"><i class="fas fa-eraser"></i> Eraser</button>
+                    <button class="tool-btn" id="clearCanvas"><i class="fas fa-trash-alt"></i> Clear</button>
+                </div>
+                
+                <div class="color-picker">
+                    <label for="colorPicker">Color:</label>
+                    <input type="color" id="colorPicker" value="#000000">
+                </div>
+                
+                <div class="brush-size">
+                    <label for="brushSize">Brush Size:</label>
+                    <input type="range" id="brushSize" min="1" max="50" value="5">
+                    <span id="brushSizeValue">5</span>
+                </div>
+                
+                <button class="btn" id="saveArtwork"><i class="fas fa-save"></i> Save Your Artwork</button>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>123 Art Avenue, Creative District, New York, NY 10001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@artifex.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Opening Hours</h4>
+                            <p>Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Complete Your Purchase</h2>
+            <p id="artworkTitle"></p>
+            <p id="artworkPrice"></p>
+            
+            <div class="payment-methods">
+                <div class="payment-tabs">
+                    <div class="payment-tab active" data-tab="credit-card">Credit Card</div>
+                    <div class="payment-tab" data-tab="net-banking">Net Banking</div>
+                    <div class="payment-tab" data-tab="upi">UPI/QR Code</div>
+                    <div class="payment-tab" data-tab="cash">Cash Payment</div>
+                </div>
+                
+                <div class="payment-content active" id="credit-card">
+                    <form class="payment-form">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-group">
+                            <label for="cardName">Name on Card</label>
+                            <input type="text" id="cardName" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123">
+                        </div>
+                        <button type="button" class="btn" id="payNow">Pay Now</button>
+                    </form>
+                </div>
+                
+                <div class="payment-content" id="net-banking">
+                    <form class="payment-form">
+                        <div class="form-group">
+                            <label for="bankSelect">Select Bank</label>
+                            <select id="bankSelect" class="form-control">
+                                <option value="">Choose your bank</option>
+                                <option value="SBI">State Bank</option>
+                                <option value="KVB">Karur Vysya Bank</option>
+                                <option value="IOB">India Overseas Bank</option>
+                                <option value="axis Bank">Axis Bank</option>
+                                <option value="RBI">Riyashini Bank of India</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn" id="netBankingPay">Proceed to Payment</button>
+                    </form>
+                </div>
+                
+                <div class="payment-content" id="upi">
+                    <div class="qr-code">
+                        <img src="c:\Users\Prasetha\Downloads\gpay.jpg">
+                        <p>Scan this QR code with any UPI app to complete your payment</p>
+                        <p>Or use UPI ID: <strong>artifexgallery@upi</strong></p>
+                    </div>
+                    <button type="button" class="btn" id="upiPaid">I've Made the Payment</button>
+                </div>
+                
+                <div class="payment-content" id="cash">
+                    <p>Please visit our gallery to complete your purchase with cash payment.</p>
+                    <p>Our address: 123 Art Avenue, Creative District, New York, NY 10001</p>
+                    <p>Opening hours: Monday-Friday 9am-6pm, Saturday 10am-4pm</p>
+                    <button type="button" class="btn" id="cashConfirm">Confirm Cash Payment</button>
+                </div>
+                
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Payment Successful!</h3>
+                    <p>Thank you for your purchase. Your artwork will be prepared for delivery.</p>
+                    <p>A confirmation has been sent to your email.</p>
+                    <button type="button" class="btn" id="closeSuccess">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="nav-link" data-section="home">Home</a>
+                <a href="#" class="nav-link" data-section="artists">Artists</a>
+                <a href="#" class="nav-link" data-section="artwork">Artwork</a>
+                <a href="#" class="nav-link" data-section="exhibitions">Exhibitions</a>
+                <a href="#" class="nav-link" data-section="paint-board">Paint Board</a>
+                <a href="#" class="nav-link" data-section="contact">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <p class="copyright">© 2023 ART-I-FEX Art Gallery Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Navigation between sections
+        const navLinksAll = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        
+        navLinksAll.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                
+                // Hide all sections
+                contentSections.forEach(section => {
+                    section.classList.remove('active-section');
+                });
+                
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active-section');
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Set home as default active section
+        document.getElementById('home').classList.add('active-section');
+        
+        // Payment Modal Functionality
+        const purchaseButtons = document.querySelectorAll('.purchase-btn');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeModal = document.querySelector('.close-modal');
+        const closeSuccess = document.getElementById('closeSuccess');
+        const paymentTabs = document.querySelectorAll('.payment-tab');
+        const paymentContents = document.querySelectorAll('.payment-content');
+        const payNowButtons = document.querySelectorAll('#payNow, #netBankingPay, #upiPaid, #cashConfirm');
+        const successMessage = document.querySelector('.success-message');
+        
+        purchaseButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const artworkCard = button.closest('.artwork-card');
+                const artworkTitle = artworkCard.querySelector('h3').textContent;
+                const artworkPrice = artworkCard.querySelector('.price').textContent;
+                
+                document.getElementById('artworkTitle').textContent = artworkTitle;
+                document.getElementById('artworkPrice').textContent = artworkPrice;
+                
+                paymentModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                // Reset payment tabs to default
+                paymentTabs.forEach(tab => tab.classList.remove('active'));
+                paymentContents.forEach(content => content.classList.remove('active'));
+                document.querySelector('[data-tab="credit-card"]').classList.add('active');
+                document.getElementById('credit-card').classList.add('active');
+                successMessage.style.display = 'none';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        closeSuccess.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === paymentModal) {
+                paymentModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Payment tab switching
+        paymentTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                paymentTabs.forEach(t => t.classList.remove('active'));
+                paymentContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Simulate payment process
+        payNowButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                paymentContents.forEach(c => c.style.display = 'none');
+                successMessage.style.display = 'block';
+            });
+        });
+        
+        // Paint Board Functionality
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentTool = 'brush';
+        let currentColor = '#000000';
+        let brushSize = 5;
+        
+        // Set canvas background to white
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Set initial drawing settings
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = brushSize;
+        ctx.lineCap = 'round';
+        
+        // Tools
+        const brushTool = document.getElementById('brushTool');
+        const lineTool = document.getElementById('lineTool');
+        const rectangleTool = document.getElementById('rectangleTool');
+        const circleTool = document.getElementById('circleTool');
+        const eraserTool = document.getElementById('eraserTool');
+        const clearCanvas = document.getElementById('clearCanvas');
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSizeSlider = document.getElementById('brushSize');
+        const brushSizeValue = document.getElementById('brushSizeValue');
+        const saveArtwork = document.getElementById('saveArtwork');
+        
+        let startX, startY;
+        let snapshot;
+        
+        // Event listeners for tools
+        brushTool.addEventListener('click', () => {
+            currentTool = 'brush';
+            updateActiveTool();
+        });
+        
+        lineTool.addEventListener('click', () => {
+            currentTool = 'line';
+            updateActiveTool();
+        });
+        
+        rectangleTool.addEventListener('click', () => {
+            currentTool = 'rectangle';
+            updateActiveTool();
+        });
+        
+        circleTool.addEventListener('click', () => {
+            currentTool = 'circle';
+            updateActiveTool();
+        });
+        
+        eraserTool.addEventListener('click', () => {
+            currentTool = 'eraser';
+            updateActiveTool();
+        });
+        
+        clearCanvas.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+        
+        colorPicker.addEventListener('input', () => {
+            currentColor = colorPicker.value;
+            ctx.strokeStyle = currentColor;
+            ctx.fillStyle = currentColor;
+        });
+        
+        brushSizeSlider.addEventListener('input', () => {
+            brushSize = brushSizeSlider.value;
+            brushSizeValue.textContent = brushSize;
+            ctx.lineWidth = brushSize;
+        });
+        
+        saveArtwork.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'artifex-artwork.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+        
+        function updateActiveTool() {
+            const tools = document.querySelectorAll('.tool-btn');
+            tools.forEach(tool => tool.classList.remove('active'));
+            
+            if (currentTool === 'brush') brushTool.classList.add('active');
+            if (currentTool === 'line') lineTool.classList.add('active');
+            if (currentTool === 'rectangle') rectangleTool.classList.add('active');
+            if (currentTool === 'circle') circleTool.classList.add('active');
+            if (currentTool === 'eraser') eraserTool.classList.add('active');
+        }
+        
+        // Drawing functions
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        
+        function startDrawing(e) {
+            isDrawing = true;
+            startX = e.offsetX;
+            startY = e.offsetY;
+            
+            if (currentTool !== 'brush' && currentTool !== 'eraser') {
+                snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+            
+            if (currentTool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+        }
+        
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            if (currentTool === 'brush' || currentTool === 'eraser') {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            } else {
+                ctx.putImageData(snapshot, 0, 0);
+                
+                if (currentTool === 'line') {
+                    drawLine(e);
+                } else if (currentTool === 'rectangle') {
+                    drawRectangle(e);
+                } else if (currentTool === 'circle') {
+                    drawCircle(e);
+                }
+            }
+        }
+        
+        function stopDrawing() {
+            isDrawing = false;
+        }
+        
+        function drawLine(e) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+        
+        function drawRectangle(e) {
+            const width = e.offsetX - startX;
+            const height = e.offsetY - startY;
+            
+            ctx.beginPath();
+            ctx.rect(startX, startY, width, height);
+            ctx.stroke();
+        }
+        
+        function drawCircle(e) {
+            const radius = Math.sqrt(
+                Math.pow(e.offsetX - startX, 2) + 
+                Math.pow(e.offsetY - startY, 2)
+            );
+            
+            ctx.beginPath();
+            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
